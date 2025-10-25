@@ -2,3 +2,4 @@ mainexe.dSYM/
 .DS_Store
 main
 *.o
+test

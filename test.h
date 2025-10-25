@@ -18,10 +18,10 @@ inline std::string green(std::string text){
 
 // A basic test macro to make it easier to write tests.
 // It also registers the test to be run automatically in main.
-#define TEST(name,contents)\
+#define TEST(name, ...)\
     std::string name(){\
         std::cout << "Running test " << __func__ << " ... "; \
-        contents \
+        __VA_ARGS__ \
         std::cout << green("ok") << std::endl;\
         return ""; \
     }\

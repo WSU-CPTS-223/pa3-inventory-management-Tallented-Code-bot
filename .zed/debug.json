@@ -1,0 +1,40 @@
+[
+  {
+    "label": "Debug: main (GDB)",
+    "adapter": "GDB",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/main",
+    "args": [],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "subProcess": true,
+    "redirectOutput": true,
+    "stopOnEntry": false,
+    "initialize_args": {
+      "console": "integratedTerminal",
+      "stopAtBeginningOfMainSubprogram": true
+    },
+    "build": {
+      "command": "make",
+      "args": ["main"]
+    }
+  },
+  {
+    "label": "Debug: test (GDB)",
+    "adapter": "GDB",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/test",
+    "args": [],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "subProcess": true,
+    "redirectOutput": true,
+    "stopOnEntry": false,
+    "initialize_args": {
+      "console": "integratedTerminal",
+      "stopAtBeginningOfMainSubprogram": true
+    },
+    "build": {
+      "command": "make",
+      "args": ["test"]
+    }
+  }
+]

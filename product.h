@@ -1,0 +1,32 @@
+#ifndef PRODUCT_H
+#define PRODUCT_H
+
+#include <string>
+
+// The number of fields in the product struct.
+const int NUM_FIELDS = 16;
+struct Product{
+    std::string id;
+    std::string product_name;
+    std::string category;
+    std::string upc_ean_code;
+    std::string selling_price;
+    std::string model_number;
+    std::string about_product;
+    std::string product_specification;
+    std::string technical_details;
+    std::string shipping_weight;
+    std::string product_dimensions;
+    std::string image;
+    std::string variants;
+    std::string sku;
+    std::string product_url;
+    std::string is_amazon_seller;
+};
+
+
+
+
+
+
+#endif

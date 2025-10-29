@@ -4,6 +4,9 @@
 #include <vector>
 #include <cassert>
 #include <sstream>
+#include <exception>
+#include <typeinfo>
+#include <stdexcept>
 
 
 // A couple of functions for colored text using ANSI codes
@@ -19,9 +22,17 @@ inline std::string green(std::string text){
 // A basic test macro to make it easier to write tests.
 // It also registers the test to be run automatically in main.
 #define TEST(name, ...)\
-    std::string name(){\
-        std::cout << "Running test " << __func__ << " ... "; \
-        __VA_ARGS__ \
+    inline std::string name(){\
+        std::cout << "Running test " << __FILE__ << "::" << __func__ << " ... "; \
+        try{\
+            __VA_ARGS__ \
+        }catch(const std::exception &e){\
+            std::cout << red("FAILED") << std::endl;\
+            std::stringstream s;\
+            s << "ERROR: Exception thrown in " << __FILE__ << ", line " << __LINE__ << std::endl;\
+            s << e.what() << std::endl;\
+            return s.str();\
+        }\
         std::cout << green("ok") << std::endl;\
         return ""; \
     }\
@@ -45,6 +56,16 @@ inline std::string green(std::string text){
         }\
     }while(0)
 
+// Assert that two value are equal; if not, the test fails.
+#define assert_eq(left, right)\
+    do{\
+        if(left != right){\
+            std::cout << red("FAILED") << std::endl;\
+            std::stringstream s; \
+            s << "ERROR: Assertion failed (`" << #left << " == " << #right << "`) (left is " << left << ", right is " << right << "), in " << __FILE__ << ", line " << __LINE__ << std::endl; \
+            return s.str();\
+        }\
+    }while(0)
 
 // A class to register tests in, which will then be run.
 // It also keeps track of test passes and fails.

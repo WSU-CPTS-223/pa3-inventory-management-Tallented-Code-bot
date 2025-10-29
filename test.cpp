@@ -1,5 +1,6 @@
 #include "test.h"
 #include "bpTree.h"
+#include "hashTable.h"
 
 // using namespace std;
 

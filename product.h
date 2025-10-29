@@ -1,7 +1,10 @@
 #ifndef PRODUCT_H
 #define PRODUCT_H
 
+
 #include <string>
+#include <vector>
+#include "hashTable.h"
 
 // The number of fields in the product struct.
 const int NUM_FIELDS = 16;
@@ -24,7 +27,16 @@ struct Product{
     std::string is_amazon_seller;
 };
 
+// The class to hold all the products.
+class ProductsStructure {
+    std::vector<Product> products;
+    HashTable<std::string, int> index;
 
+    public:
+    void insert(Product p);
+    Product get(std::string id);
+
+};
 
 
 

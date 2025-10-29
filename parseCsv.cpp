@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -147,7 +148,19 @@ TEST(testParseCsvLineToProduct, {
 
 
 
-vector<Product> parseProductsFile(string filename){
-    vector<Product> products;
+ProductsStructure parseProductsFile(string filename){
+    ProductsStructure products;
+
+    fstream file(filename);
+
+    if(file.is_open()){
+        string line;
+        while(getline(file, line)){
+            Product p = parseCsvLineToProduct(line);
+            products.insert(p);
+        }
+        file.close();
+    }
+
     return products;
 }

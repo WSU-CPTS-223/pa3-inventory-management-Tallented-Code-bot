@@ -10,7 +10,7 @@ std::vector<std::string> parseCsvLine(std::string line);
 
 Product parseCsvLineToProduct(std::string line);
 
-std::vector<Product> parseProductsFile(std::string filename);
+ProductsStructure parseProductsFile(std::string filename);
 
 
 #endif

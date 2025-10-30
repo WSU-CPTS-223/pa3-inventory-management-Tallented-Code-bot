@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <ostream>
 #include "hashTable.h"
 
 // The number of fields in the product struct.
@@ -25,7 +26,15 @@ struct Product{
     std::string sku;
     std::string product_url;
     std::string is_amazon_seller;
+
+
+    // Stream insertion should be a non-member so that `std::cout << p` works.
+    friend std::ostream& operator<<(std::ostream& os, const Product& p);
+    bool operator==(const Product& other) const;
+    inline bool operator!=(const Product&other){return !(*(this)==other);}
 };
+
+
 
 // The class to hold all the products.
 class ProductsStructure {
@@ -35,6 +44,7 @@ class ProductsStructure {
     public:
     void insert(Product p);
     Product get(std::string id);
+    std::vector<Product> findAllInCategory(std::string category);
 
 };
 

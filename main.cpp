@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "bpTree.h"
+#include "parseCsv.h"
+#include "product.h"
 
 using namespace std;
 
@@ -21,39 +24,55 @@ bool validCommand(string line) {
          (line.rfind("listInventory") == 0);
 }
 
-void evalCommand(string line) {
+void evalCommand(string line, ProductsStructure& allProducts) {
   if (line == ":help") {
     printHelp();
+    return;
   }
-  // if line starts with find
-  else if (line.rfind("find", 0) == 0) {
-    // Look up the appropriate datastructure to find if the inventory exist
-    cout << "YET TO IMPLEMENT!" << endl;
+
+  stringstream s(line);
+
+  string command;
+  s >> command;
+
+  if(command == "find"){
+      string id;
+      s >> id;
+
+      cout << "Finding items matching id " << id << "." << endl;
+
+      Product p = allProducts.get(id);
+      cout << p.product_name << ", for " << p.selling_price << " at " << p.product_url << endl;
+  }else if (command == "listInventory"){
+      string category;
+      s >> category;
+
+      vector<Product> products = allProducts.findAllInCategory(category);
+
+      cout << "Finding items in category " << category << "." << endl;
+
+      for(Product p : products){
+          cout << "ID: " << p.id << ", Name: " << p.product_name << endl;
+      }
   }
-  // if line starts with listInventory
-  else if (line.rfind("listInventory") == 0) {
-    // Look up the appropriate datastructure to find all inventory belonging to
-    // a specific category
-    cout << "YET TO IMPLEMENT!" << endl;
-  }
+
 }
 
 void bootStrap() {
   cout << "\n Welcome to Amazon Inventory Query System" << endl;
   cout << " enter :quit to exit. or :help to list supported commands." << endl;
   cout << "\n> ";
-  // TODO: Do all your bootstrap operations here
-  // example: reading from CSV and initializing the data structures
-  // Don't dump all code into this single function
-  // use proper programming practices
 }
 
 int main(int argc, char const *argv[]) {
   string line;
   bootStrap();
+
+  ProductsStructure allProducts = parseProductsFile("marketing_dataset.csv");
+
   while (getline(cin, line) && line != ":quit") {
     if (validCommand(line)) {
-      evalCommand(line);
+      evalCommand(line, allProducts);
     } else {
       cout
           << "Command not supported. Enter :help for list of supported commands"

@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-// Set the starting capacity to 20,000, which is good in this case of needing to
+// Set the starting capacity to 25,000, which is good in this case of needing to
 // process 10,000 items. It would not be ideal in a more general case.
-const int STARTING_CAPACITY = 20000;
+const int STARTING_CAPACITY = 25000;
 const float LOAD_VALUE_THRESHOLD = 0.5;
 
 template <typename Key, typename Value>
@@ -26,8 +26,10 @@ class HashTable{
     int _size;
 
     public:
-    HashTable(){
-        _capacity = STARTING_CAPACITY;
+    HashTable(): HashTable(STARTING_CAPACITY){ }
+
+    HashTable(int capacity){
+        _capacity = capacity;
         _size = 0;
 
         _values.reserve(_capacity);
@@ -42,7 +44,7 @@ class HashTable{
         }
     }
 
-    int size(){return size;}
+    int size(){return _size;}
     int capacity(){return _capacity;}
 
     void insert(Key key, Value value){
@@ -102,10 +104,12 @@ class HashTable{
                 _values.push_back(nullptr);
             }
         }
+        _size = 0;
 
-
-        for(Node* item: _values){
-            insert(item->key, item->value);
+        for(Node* item: oldVec){
+            if(item != nullptr){
+                insert(item->key, item->value);
+            }
         }
     }
 
@@ -174,6 +178,18 @@ TEST(testBasicInsertAndRetreival, {
 TEST(testHashTableCapacity, {
     HashTable<int, std::string> table;
     assert_eq(table._values.size(), STARTING_CAPACITY);
+})
+
+
+TEST(testHashTableRehashing, {
+    HashTable<int, std::string> table(10);
+
+    for(int i = 0; i < 10; i++ ){
+        table.insert(i, "hello");
+        assert_eq(table.get(i), "hello");
+    }
+
+    assert_eq(table.size(), 10);
 })
 
 #endif

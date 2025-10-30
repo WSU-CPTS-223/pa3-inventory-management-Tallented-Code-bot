@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11 -g -O0
 TARGET = main
 TEST_TARGET = test
-LIB_SRCS = parseCsv.cpp
+LIB_SRCS = parseCsv.cpp product.cpp
 SRCS = main.cpp $(LIB_SRCS)
 TEST_SRCS = test.cpp $(LIB_SRCS)
 OBJS = $(SRCS:.cpp=.o)
